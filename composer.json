@@ -1,0 +1,18 @@
+{
+  "name": "andizer/formizer",
+  "description": "Building and validating forms",
+  "homepage": "https://github.com/andizer/formizer",
+  "keywords": [
+    "forms",
+    "form-validation"
+  ],
+  "type": "library",
+  "minimum-stability": "stable",
+  "license": "LGPL-3.0-or-later",
+  "autoload": {
+    "psr-4": { "Andizer\\Formizer\\": "classes/" }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7"
+  }
+}
