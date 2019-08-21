@@ -1,6 +1,6 @@
 <?php
 
-namespace Andizer\Formizer\Form;
+namespace Andizer\Formizer;
 
 interface Handler {
 

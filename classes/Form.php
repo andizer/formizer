@@ -1,6 +1,6 @@
 <?php
 
-namespace Andizer\Formizer\Form;
+namespace Andizer\Formizer;
 
 use Andizer\Formizer\Fields\Field;
 use Andizer\Formizer\Fields\NullField;

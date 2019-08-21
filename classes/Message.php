@@ -1,5 +1,5 @@
 <?php
-namespace Andizer\Formizer\Form;
+namespace Andizer\Formizer;
 
 class Message {
 
