@@ -2,8 +2,8 @@
 
 namespace Andizer\Formizer\Form;
 
-use Andizer\Formizer\Form\Fields\Field;
-use Andizer\Formizer\Form\Validations\Validation;
+use Andizer\Formizer\Fields\Field;
+use Andizer\Formizer\Validations\Validation;
 
 class Validator {
 

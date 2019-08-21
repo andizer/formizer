@@ -1,6 +1,6 @@
 <?php
 
-namespace Andizer\Formizer\Form\Fields;
+namespace Andizer\Formizer\Fields;
 
 /**
  * @property string id

@@ -2,8 +2,8 @@
 
 namespace Andizer\Formizer\Form;
 
-use Andizer\Formizer\Form\Fields\Field;
-use Andizer\Formizer\Form\Fields\NullField;
+use Andizer\Formizer\Fields\Field;
+use Andizer\Formizer\Fields\NullField;
 
 class Form {
 

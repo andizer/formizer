@@ -1,9 +1,9 @@
 <?php
 
-namespace Andizer\Formizer\Form\Validations;
+namespace Andizer\Formizer\Validations;
 
-use Andizer\Formizer\Form\Exception;
-use Andizer\Formizer\Form\Fields\Field;
+use Andizer\Formizer\Exception;
+use Andizer\Formizer\Fields\Field;
 
 class MinLength implements Validation {
 
