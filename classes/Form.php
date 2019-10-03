@@ -2,6 +2,7 @@
 
 namespace Andizer\Formizer;
 
+use Andizer\Formizer\Decorations\Decoration;
 use Andizer\Formizer\Fields\Field;
 use Andizer\Formizer\Fields\NullField;
 
@@ -16,6 +17,12 @@ class Form {
 	 * @var Validator The validator object.
 	 */
 	protected $validator;
+
+	/**
+	 * @var Decoration[]
+	 */
+	protected $decorations = [];
+
 
 	/**
 	 * Adds a field to the form.
@@ -62,5 +69,31 @@ class Form {
 			$field->value = $values[ $field->getFieldName() ] ?? '';
 		}
 	}
+	/**
+	 * Registers a decoration.
+	 *
+	 * @param Decoration $decoration
+	 */
+	public function registerDecoration( Decoration $decoration ): void {
+		$this->decorations[] = $decoration;
+	}
+
+	/**
+	 * Applies the registered decorations to the set fields.
+	 */
+	public function applyDecorations(): void {
+		array_map( [ $this, 'applyDecoration' ], $this->decorations );
+	}
+
+	/**
+	 * Applies the decoration on the set fields.
+	 *
+	 * @param Decoration $decoration
+	 */
+	public function applyDecoration( Decoration $decoration ): void {
+		array_map( [ $decoration, 'decorate' ], $this->fields );
+	}
+
+
 
 }
