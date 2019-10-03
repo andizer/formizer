@@ -1,0 +1,13 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="main">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./classes</directory>
+        </whitelist>
+    </filter>
+</phpunit>
