@@ -3,27 +3,28 @@
 namespace Andizer\Formizer\Tests\Decorations;
 
 use Andizer\Formizer\Decorations\ClassName;
-use Andizer\Formizer\Fields\Button;
+use Andizer\Formizer\Fields\Field;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ButtonTest
- * @package Andizer\Formizer\Tests
  *
- * @coversDefaultClass \Andizer\Formizer\Fields\Button
+ * @coversDefaultClass \Andizer\Formizer\Decorations\ClassName
  */
 class ClassNameTest extends TestCase {
 
 	/**
-	 * @covers ::render
+	 * @covers ::decorate
 	 */
-	public function test_render(): void {
-		$instance = new ClassName( 'extra-classname', [ Button::class ] );
-		$button   = new Button( 'button', [ 'class' => 'classname' ] );
+	public function test_decorate(): void {
+		$button        = Mockery::mock( Field::class );
+		$button->class = 'classname';
 
-		$button = $instance->decorate( $button );
+		$instance = new ClassName( 'extra-classname', [ get_class( $button ) ] );
+		$button   = $instance->decorate( $button );
 
-		$this->assertEquals(
+		static::assertEquals(
 			'classname extra-classname',
 			$button->class
 		);
