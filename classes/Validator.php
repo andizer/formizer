@@ -4,19 +4,32 @@ namespace Andizer\Formizer;
 
 use Andizer\Formizer\Fields\Field;
 use Andizer\Formizer\Repositories\Fields;
+use Andizer\Formizer\Repositories\ValidationRules;
 use Andizer\Formizer\Validations\Validation;
 
 class Validator {
 
 	/**
-	 * @var array The validations.
+	 * Holds the repository with validation rules.
+	 *
+	 * @var ValidationRules
 	 */
-	protected $validations = [];
+	protected $validationRules;
 
 	/**
 	 * @var array The validation errors.
 	 */
 	protected $errors = [];
+
+
+	/**
+	 * Validator constructor.
+	 *
+	 * @param ValidationRules $validationRules
+	 */
+	public function __construct( ValidationRules $validationRules ) {
+		$this->validationRules = $validationRules;
+	}
 
 	/**
 	 * Adds a validation.
@@ -25,7 +38,7 @@ class Validator {
 	 * @param Validation $validation The validation.
 	 */
 	public function addValidation( $field, Validation $validation ): void {
-		$this->validations[] = [ $field, $validation ];
+		$this->validationRules->add( $field, $validation );
 	}
 
 	/**
@@ -34,8 +47,7 @@ class Validator {
 	 * @param Fields $fields Repository containing the fields.
 	 */
 	public function validate( Fields $fields ): void {
-		/** @var Validation $validation */
-		foreach ( $this->validations as [ $fieldName, $validation ] ) {
+		foreach ( $this->validationRules->get() as [ $fieldName, $validation ] ) {
 			$this->validateField( $validation, $fields->find( $fieldName ) );
 		}
 	}
