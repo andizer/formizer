@@ -3,6 +3,7 @@
 namespace Andizer\Formizer;
 
 use Andizer\Formizer\Fields\Field;
+use Andizer\Formizer\Repositories\Fields;
 use Andizer\Formizer\Validations\Validation;
 
 class Validator {
@@ -30,12 +31,12 @@ class Validator {
 	/**
 	 * Validates the fields.
 	 *
-	 * @param Form $form The form to validate.
+	 * @param Fields $fields Repository containing the fields.
 	 */
-	public function validate( Form $form ): void {
+	public function validate( Fields $fields ): void {
 		/** @var Validation $validation */
 		foreach ( $this->validations as [ $fieldName, $validation ] ) {
-			$this->validateField( $validation, $form->getField( $fieldName ) );
+			$this->validateField( $validation, $fields->find( $fieldName ) );
 		}
 	}
 
