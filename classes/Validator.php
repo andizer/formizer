@@ -3,58 +3,42 @@
 namespace Andizer\Formizer;
 
 use Andizer\Formizer\Fields\Field;
+use Andizer\Formizer\Repositories\Fields;
+use Andizer\Formizer\Repositories\ValidationRules;
 use Andizer\Formizer\Validations\Validation;
 
 class Validator {
 
 	/**
-	 * @var array The validations.
-	 */
-	protected $validations = [];
-
-	/**
-	 * @var array The validation errors.
-	 */
-	protected $errors = [];
-
-	/**
-	 * Adds a validation.
+	 * Holds the repository with validation rules.
 	 *
-	 * @param string     $field      The field to add validation for.
-	 * @param Validation $validation The validation.
+	 * @var ValidationRules
 	 */
-	public function addValidation( $field, Validation $validation ): void {
-		$this->validations[] = [ $field, $validation ];
+	protected $validationRules;
+
+	/**
+	 * Validator constructor.
+	 *
+	 * @param ValidationRules $validationRules
+	 */
+	public function __construct( ValidationRules $validationRules ) {
+		$this->validationRules  = $validationRules;
 	}
 
 	/**
 	 * Validates the fields.
 	 *
-	 * @param Form $form The form to validate.
+	 * @param Fields $fields Repository containing the fields.
+	 *
+	 * @return bool The validation result.
 	 */
-	public function validate( Form $form ): void {
-		/** @var Validation $validation */
-		foreach ( $this->validations as [ $fieldName, $validation ] ) {
-			$this->validateField( $validation, $form->getField( $fieldName ) );
+	public function validate( Fields $fields ): bool {
+		$results = [];
+		foreach ( $this->validationRules->get() as [ $fieldName, $validation ] ) {
+			$results[] = $this->validateField( $validation, $fields->find( $fieldName ) );
 		}
-	}
 
-	/**
-	 * Retrieves the list of set errors.
-	 *
-	 * @return array The set errors.
-	 */
-	public function getErrors(): array {
-		return $this->errors;
-	}
-
-	/**
-	 * Checks if there are there any errors.
-	 *
-	 * @return bool True when having errors.
-	 */
-	public function hasErrors(): bool {
-		return ! empty( $this->errors );
+		return ! in_array( false, array_unique( $results ), true );
 	}
 
 	/**
@@ -62,28 +46,19 @@ class Validator {
 	 *
 	 * @param Validation $validation The validation to run.
 	 * @param Field      $field      The field to validate.
+	 *
+	 * @return bool
 	 */
-	protected function validateField( Validation $validation, Field $field ): void {
+	protected function validateField( Validation $validation, Field $field ): bool {
 		try {
 			$validation->validate( $field );
+
+			return true;
 		}
 		catch( Exception $exception ) {
-			$this->addError( $field->getFieldName(), $exception->getMessage() );
+			$field->addError( $exception->getMessage() );
+
+			return false;
 		}
 	}
-
-	/**
-	 * Adds an error to the error list.
-	 *
-	 * @param string $fieldName The field name to add the error for.
-	 * @param string $error     The error to add.
-	 */
-	protected function addError( $fieldName, $error ): void {
-		if ( empty( $this->errors[ $fieldName ] ) ) {
-			$errors[ $fieldName ] = [];
-		}
-
-		$this->errors[ $fieldName ][] = $error;
-	}
-
 }

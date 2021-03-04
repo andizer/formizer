@@ -13,7 +13,7 @@
     "psr-4": { "Andizer\\Formizer\\": "classes/" }
   },
   "autoload-dev": {
-    "psr-4": { "Andizer\\Formizer\\Test\\": "tests/" }
+    "psr-4": { "Andizer\\Formizer\\Tests\\": "tests/" }
   },
   "require-dev": {
     "phpunit/phpunit": "^8.3",
