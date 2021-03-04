@@ -28,6 +28,11 @@ abstract class Field {
 	protected $fieldLabel = '';
 
 	/**
+	 * @var array
+	 */
+	protected $errors = [];
+
+	/**
 	 * Renders the field.
 	 *
 	 * @return string The rendered field.
@@ -108,6 +113,15 @@ abstract class Field {
 	}
 
 	/**
+	 * Adds an field error, for example a validation error.
+	 *
+	 * @param string $error The error to add.
+	 */
+	public function addError( $error ): void {
+		$this->errors[] = $error;
+	}
+
+	/**
 	 * Retrieves the defaults.
 	 *
 	 * @return array The defaults.
@@ -133,5 +147,4 @@ abstract class Field {
 
 		$this->attributes = array_merge( $defaults, $this->getDefaults(), $attributes );
 	}
-
 }
